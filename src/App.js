@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+//8
+import React from 'react';
+import { connect } from 'react-redux';
+import { addTask, toggleTask, deleteTask, editTask } from './actions';
+import AddTask from './components/AddTask';
+import TaskList from './components/TaskList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = ({ tasks, addTask, toggleTask, deleteTask, editTask }) => (
+  <div>
+    <h1>Task Manager</h1>
+    <AddTask addTask={addTask} />
+    <TaskList tasks={tasks} toggleTask={toggleTask} deleteTask={deleteTask} editTask={editTask} />
+  </div>
+);
 
-export default App;
+const mapStateToProps = (state) => ({
+  tasks: state.tasks
+});
+
+const mapDispatchToProps = {
+  addTask,
+  toggleTask,
+  deleteTask,
+  editTask
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
